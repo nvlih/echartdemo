@@ -1,0 +1,9 @@
+[{
+  "id":1,
+  "text":"report",
+  "children":[{
+    "text":"File1",
+    "url":"my"
+  }]
+}
+]

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require("fs") ;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,9 +9,14 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/getjson', function(req, res, next) {
-  console.log('..respond with a resource');
-
-  res.send('respond with a resource');
+  fs.readFile("tree.json","utf8",function (error,data){
+    res.send(data);
+  }) ;
 });
 
+router.get('/mytree', function(req, res, next) {
+
+   // res.send(data);
+
+});
 module.exports = router;
