@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" name="Echart Demo">
+    <title>Echart Demo</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animations.css">
+    <!--easyui-css-->
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.3/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.3/themes/icon.css">
+
+    <script src="/jquery-easyui-1.4.3/jquery.min.js"></script>
+    <script src="/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+
+  </head>
+  <!--1. 在整个页面创建布局面板-->
+   <body class="easyui-layout" >
+   <div id="cc" style="width:700px;height:550px;">
+       <div data-options="region:'north'" style="height:30px;background:#B3DFDA;padding:10px">north region</div>
+       <div data-options="region:'south'" style="height:50px;background:#A9FACD;padding:10px;"></div>
+       <div data-options="region:'west'" style="width:50px;padding:10px;">
+           <ul class="easyui-tree" data-options="url:'getjson',method:'get',animate:true,dnd:true"></ul>
+       </div>
+       <div data-options="region:'center'" style="padding:20px">
+
+       </div>
+   </div>
+   </body>
+</html>
+
+<script type="text/javascript">
+    $(function(){
+        $('#cc').layout();
+        setHeight();
+    });
+    function setHeight(){
+        var c = $('#cc');
+        var p = c.layout('panel','center');	// get the center panel
+        var oldHeight = p.panel('panel').outerHeight();
+        p.panel('resize', {height:'auto'});
+        var newHeight = p.panel('panel').outerHeight();
+        c.layout('resize',{
+            height: (c.height() + newHeight - oldHeight)
+        });
+    }
+</script>
