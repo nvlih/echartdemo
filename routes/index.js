@@ -14,9 +14,10 @@ router.get('/getjson', function(req, res, next) {
   }) ;
 });
 
-router.get('/mytree', function(req, res, next) {
-
-   // res.send(data);
+router.get('/mybar', function(req, res, next) {
+  fs.readFile("bar.json","utf8",function (error,data){
+    res.send(data);
+  }) ;
 
 });
 module.exports = router;

@@ -12,42 +12,47 @@
     <script src="/jquery-easyui-1.4.3/jquery.min.js"></script>
     <script src="/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
       <script src="/echarts/echarts-plain.js"></script>
+      <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+      <script src="/javascripts/mybar.js"></script>
   </head>
   <!--1. 在整个页面创建布局面板-->
   <body class="easyui-layout">
   <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>
   <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
-      <ul id="mytree" class="easyui-tree" data-options="url:'getjson',method:'get',animate:true,dnd:true"></ul>
+      <ul id="mytree" name="mytree" class="easyui-tree" data-options="url:'getjson',method:'get',animate:true,dnd:true"></ul>
   </div>
-  <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
   <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
-  <div data-options="region:'center',title:'Center'"></div>
+  <div data-options="region:'center',title:'Center'">
+      <div id="main" name="main" style="height:400px"></div>
+  </div>
   </body>
 </html>
 
 <script type="text/javascript">
-    $(function(){
-        $('#cc').layout();
-        setHeight();
-    });
-    function setHeight(){
-        var c = $('#cc');
-        var p = c.layout('panel','center');	// get the center panel
-        var oldHeight = p.panel('panel').outerHeight();
-        p.panel('resize', {height:'auto'});
-        var newHeight = p.panel('panel').outerHeight();
-        c.layout('resize',{
-            height: (c.height() + newHeight - oldHeight)
-        });
-    };
+    var arr1 = [];
+    var arr2 = [];
+
     $('#mytree').tree({
         onClick: function(node){
-            //alert(node.url);
             $.ajax({
                 url: node.url,
-                success: function(data){
-                alert(data);
+                success: function(d){
+                    var str= JSON.parse(d);
+                    if(str.id == "mybar"){
+                        console.log(11111);
+                        var data= str.datas;
+                        for(i=0;i<data.length;i++){
+                            arr1.push(parseInt(data[i].consume));
+                        }
+                        for(i=0;i<data.length;i++){
+                            arr2.push(data[i].date);
+                        }
+                        drewChart(arr1,arr2);
+                    }
             }});
         }
     });
+
+
+
 </script>
